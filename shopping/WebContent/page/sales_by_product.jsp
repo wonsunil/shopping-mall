@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*" %>
+<%@ page import="shopping.DB" %>
 
 <!DOCTYPE html>
 <html>
@@ -11,9 +12,6 @@
 <body>
 <%
 	try {
-		Class.forName("oracle.jdbc.OracleDriver");
-		Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@//localhost/xe", "center_jsp", "1234");
-        Statement stmt = conn.createStatement();
         String query = "SELECT " +
 				"NAME, " +
 				"SUM(SALE_PRICE), " +
@@ -23,7 +21,7 @@
 					"SALE WHERE PRODUCT.PRODUCT_ID = SALE.PRODUCT_ID " +
 				"GROUP BY " +
 					"PRODUCT.PRODUCT_ID, PRODUCT.NAME";
-        ResultSet rs = stmt.executeQuery(String.format(query)); 
+        ResultSet rs = DB.fetch(String.format(query)); 
 %>
 	<table border=1>
 		<thead>
@@ -45,8 +43,7 @@
 			<%	
 		}; 
  
-		stmt.close();
-		conn.close();
+		rs.close();
 		
 		} catch (Exception ignord) {}
 %>

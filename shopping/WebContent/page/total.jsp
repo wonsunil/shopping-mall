@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*" %>
+<%@ page import="shopping.DB" %>
 	
 <!DOCTYPE html>
 <html>
@@ -12,11 +13,7 @@
 
 <%
 	try {
-		Class.forName("oracle.jdbc.OracleDriver");
-		Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@//localhost/xe", "center_jsp", "1234");
-        Statement stmt = conn.createStatement();
-        
-        String query = "SELECT " +
+		String query = "SELECT " +
         			"SALE.SALE_ID, " +
         			"NAME, " +
         			"PURCHASE_DATE, " + 
@@ -28,7 +25,7 @@
         			"ORDER BY " + 
         				"PURCHASE_DATE";
         
-        ResultSet rs = stmt.executeQuery(query); 
+        ResultSet rs = DB.fetch(query);
  
 %>
 	<table border=1>
@@ -55,8 +52,7 @@
 			<%	
 		}; 
  
-		stmt.close();
-		conn.close();
+		rs.close();
 		
 		} catch (Exception ignord) {}
 %>

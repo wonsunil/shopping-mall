@@ -1,12 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*" %>
+<%@ page import="shopping.DB" %>
 
-<%
-	try {
-		Class.forName("oracle.jdbc.OracleDriver");
-		Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/xe", "center_jsp", "1234");
-%>
     
 <!DOCTYPE html>
 <html>
@@ -22,14 +18,17 @@
 				<td>
 					<select name="product_name">
 						<%
-							Statement stmt= conn.createStatement();
-							ResultSet rs = stmt.executeQuery("SELECT NAME FROM PRODUCT");
-						
-							while(rs.next()) {
-								%>
-									<option value="<%=rs.getString(1) %>"><%=rs.getString(1) %></option>
-								<%
-							};
+							try{
+								ResultSet rs = DB.fetch("SELECT NAME FROM PRODUCT");
+								
+								while(rs.next()) {
+									%>
+										<option value="<%=rs.getString(1) %>"><%=rs.getString(1) %></option>
+									<%
+								};
+								
+								rs.close();
+							} catch(Exception ignored) {};
 						%>
 					</select>
 				</td>
@@ -77,13 +76,3 @@
 		document.forms[0].reset();
 	};
 </script>
-
-<%
-		conn.commit();
-		stmt.close();
-		
-		conn.close();
-	} catch (Exception e) {
-		e.printStackTrace();
-	};	
-%>
