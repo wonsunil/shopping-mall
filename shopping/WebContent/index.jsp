@@ -16,6 +16,8 @@
 	
 	<%
 		switch(section) {
+		case "insert_sale" : %> <%@include file="page/insert_sale.jsp" %> <%
+			break;
 		case "total" : %> <%@include file="page/total.jsp" %> <%
 			break;
 		case "sales_by_product" : %> <%@include file="page/sales_by_product.jsp" %> <%
@@ -29,4 +31,9 @@
 	
 	<%@include file="static/footer.jsp" %>
 </body>
+<script>
+	document.querySelector("body > a").onclick = function(event) {
+		if(event.target !== document.forms[0]) event.preventDefault();
+	};
+</script>
 </html>
