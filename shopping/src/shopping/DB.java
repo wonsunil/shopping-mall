@@ -35,7 +35,22 @@ public class DB {
 	public static ResultSet fetch(String query) throws Exception {
 		Connection db = getDB();
 		ResultSet rs = db.prepareStatement(query).executeQuery();
-				
+		
+		return rs;
+	};
+	public static ResultSet fetch(String query, String[] datas) throws Exception {
+		Connection db = getDB();
+		PreparedStatement pstmt = db.prepareStatement(query);
+		
+		int index = 1;
+		for(String data : datas) {
+			pstmt.setString(index, data);
+			
+			index++;
+		}
+		
+		ResultSet rs = pstmt.executeQuery();
+		
 		return rs;
 	};
 }
