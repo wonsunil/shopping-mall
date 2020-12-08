@@ -16,6 +16,12 @@
 	
 	<%
 		switch(section) {
+		case "total" : %> <%@include file="page/total.jsp" %> <%
+			break;
+		case "sales_by_product" : %> <%@include file="page/sales_by_product.jsp" %> <%
+			break; 
+		case "sales_by_category" : %> <%@include file="page/sales_by_category.jsp" %> <%
+				break; 
 		default : %> <%@include file="static/index.jsp" %>
 	<%	
 		}
