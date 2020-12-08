@@ -25,7 +25,7 @@
         					"PRODUCT.CATEGORY_ID =  CATEGORY.CATEGORY_ID " +
         				"AND PRODUCT.PRODUCT_ID = SALE.PRODUCT_ID " +
         				"GROUP BY " +
-        					"CATEGORY.NAME";
+        					"CATEGORY.CATEGORY_ID, CATEGORY.NAME";
         ResultSet rs = stmt.executeQuery(query); 
 %>
 	<table border=1>
