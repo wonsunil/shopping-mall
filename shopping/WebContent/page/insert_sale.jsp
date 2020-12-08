@@ -36,7 +36,7 @@
 			</tr>
 			<tr>
 				<td>수량</td>
-				<td><input name="amount"></td>
+				<td><input name="amount" type="number"></td>
 			</tr>
 			<tr>
 				<td>판매날짜</td>
