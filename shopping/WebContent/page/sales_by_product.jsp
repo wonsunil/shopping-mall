@@ -14,14 +14,16 @@
 		Class.forName("oracle.jdbc.OracleDriver");
 		Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@//localhost/xe", "center_jsp", "1234");
         Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT " +
-        								"NAME, " +
-        								"SUM(SALE_PRICE), " +
-        								"SUM(AMOUNT) " + 
-        								"FROM " +
-        									"PRODUCT, " +
-        									"SALE WHERE PRODUCT.PRODUCT_ID = SALE.PRODUCT_ID " +
-        								"GROUP BY NAME"); 
+        String query = "SELECT " +
+				"NAME, " +
+				"SUM(SALE_PRICE), " +
+				"SUM(AMOUNT) " + 
+				"FROM " +
+					"PRODUCT, " +
+					"SALE WHERE PRODUCT.PRODUCT_ID = SALE.PRODUCT_ID " +
+				"GROUP BY " +
+					"PRODUCT.PRODUCT_ID, PRODUCT.NAME";
+        ResultSet rs = stmt.executeQuery(String.format(query)); 
 %>
 	<table border=1>
 		<thead>
