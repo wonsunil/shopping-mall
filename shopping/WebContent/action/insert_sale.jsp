@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*" %>
+<%@ page import="shopping.DB" %>
 
 <%
 	request.setCharacterEncoding("UTF-8");
@@ -9,34 +10,26 @@
 	int amount = Integer.parseInt(request.getParameter("amount"));
 	String sale_date = request.getParameter("sale_date");
 	
+	String[] id_data = {product_name};
+	String[] price_datas = {Integer.toString(amount), product_name};
+	
 	try{
-		Class.forName("oracle.jdbc.OracleDriver");
-		Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/xe", "center_jsp", "1234");
-		
-		Statement stmt = conn.createStatement();
-		Statement stmt_id = conn.createStatement();
-		Statement stmt_price = conn.createStatement();
-		
-		String id_query = "SELECT PRODUCT_ID FROM PRODUCT WHERE NAME = '%s'";
-		ResultSet rs_id = stmt_id.executeQuery(String.format(id_query, product_name));;
+		String id_query = "SELECT PRODUCT_ID FROM PRODUCT WHERE NAME = ?";
+		ResultSet rs_id = DB.fetch(id_query, id_data);
 		rs_id.next();
 		
-		String price_query = "SELECT SUM(PRICE * '%d') FROM PRODUCT, SALE WHERE PRODUCT.PRODUCT_ID = SALE.PRODUCT_ID AND PRODUCT.NAME = '%s'";
-		ResultSet rs_price = stmt_price.executeQuery(String.format(price_query, amount, product_name));
+		String price_query = "SELECT SUM(PRICE * ?) FROM PRODUCT, SALE WHERE PRODUCT.PRODUCT_ID = SALE.PRODUCT_ID AND PRODUCT.NAME = ?";
+		ResultSet rs_price = DB.fetch(price_query, price_datas);
 		rs_price.next();
 		
 		String query = "INSERT INTO SALE(SALE_ID, PRODUCT_ID, PURCHASE_DATE, SALE_PRICE, AMOUNT) " + 
-					   " VALUES(SEQ_SALE.NEXTVAL, '%s', '%s', '%d', '%d')";
+					   " VALUES(SEQ_SALE.NEXTVAL, ?, ?, ?, ?)";
 		
-		out.println(rs_id.getString(1));
-		out.println(String.format(query, rs_id.getString(1), sale_date, rs_price.getInt(1), amount));
-		ResultSet rs = stmt.executeQuery(String.format(query, rs_id.getString(1), sale_date, rs_price.getInt(1), amount));
+		String[] datas = {rs_id.getString(1), sale_date, Integer.toString(rs_price.getInt(1)), Integer.toString(amount)};
+		DB.execute(query, datas);
 		
-		conn.commit();
-		
-		stmt.close();
-		conn.close();
-		
+		rs_id.close();
+		rs_price.close();
 	} catch (Exception e) {
 		
 	};
