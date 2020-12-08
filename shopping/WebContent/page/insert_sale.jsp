@@ -27,7 +27,6 @@
 									<%
 								};
 								
-								rs.close();
 							} catch(Exception ignored) {};
 						%>
 					</select>

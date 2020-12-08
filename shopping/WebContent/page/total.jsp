@@ -51,8 +51,6 @@
 			</tr>
 			<%	
 		}; 
- 
-		rs.close();
 		
 		} catch (Exception ignord) {}
 %>
