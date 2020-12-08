@@ -26,7 +26,6 @@
         				"PURCHASE_DATE";
         
         ResultSet rs = DB.fetch(query);
- 
 %>
 	<table border=1>
 		<thead>
@@ -41,6 +40,7 @@
 		<tbody>
 <%
         while (rs.next()) {
+
         	%>
 			<tr>
 				<td><%=rs.getInt(1)%></td>
@@ -52,6 +52,7 @@
 			<%	
 		}; 
 		
+		rs.close();
 		} catch (Exception ignord) {}
 %>
 		</tbody>

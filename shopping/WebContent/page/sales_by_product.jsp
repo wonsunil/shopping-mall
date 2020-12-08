@@ -43,6 +43,8 @@
 			<%	
 		}; 
 		
+		rs.close();
+		
 		} catch (Exception ignord) {}
 %>
 		</tbody>

@@ -44,7 +44,9 @@
 				<td><%=rs.getInt(3)%></td>
 			</tr>
 			<%	
-		}; 
+		};
+		
+		rs.close();
 		
 		} catch (Exception ignord) {}
 %>
