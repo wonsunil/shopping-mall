@@ -13,7 +13,7 @@
 <%
 	try {
 		Class.forName("oracle.jdbc.OracleDriver");
-		Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@//122.128.169.32:1521/xe", "sdh_14", "1234");
+		Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@//localhost/xe", "center_jsp", "1234");
         Statement stmt = conn.createStatement();
         
         String query = "SELECT " +
